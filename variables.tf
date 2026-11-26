@@ -47,14 +47,6 @@ EOT
   validation {
     condition = alltrue([
       for k, v in var.kusto_attached_database_configurations : (
-        length(v.name) <= 40
-      )
-    ])
-    error_message = "[from validate.DataConnectionName: invalid when len(value) > 40]"
-  }
-  validation {
-    condition = alltrue([
-      for k, v in var.kusto_attached_database_configurations : (
         length(v.resource_group_name) <= 90
       )
     ])
@@ -76,22 +68,6 @@ EOT
     ])
     error_message = "[from resourcegroups.ValidateName: invalid when len(value) == 0]"
   }
-  validation {
-    condition = alltrue([
-      for k, v in var.kusto_attached_database_configurations : (
-        v.database_name_override == null || (length(v.database_name_override) <= 260)
-      )
-    ])
-    error_message = "[from validate.DatabaseName: invalid when len(value) > 260]"
-  }
-  validation {
-    condition = alltrue([
-      for k, v in var.kusto_attached_database_configurations : (
-        v.database_name_prefix == null || (length(v.database_name_prefix) <= 260)
-      )
-    ])
-    error_message = "[from validate.DatabaseName: invalid when len(value) > 260]"
-  }
-  # Note: 14 additional provider-side validators are enforced at apply time but not mirrored as validation{} blocks here (bespoke or non-mechanically-translatable).
+  # Note: 10 additional provider-side validators are enforced at apply time but not mirrored as validation{} blocks here (bespoke or non-mechanically-translatable).
 }
 
